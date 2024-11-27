@@ -319,7 +319,19 @@ class AC3:
         partial assignment; the method returns False otherwise. 
         """
         # Implement here the domain-dependent version of AC3.
-        pass
+        while len(Q) != 0:
+            variables_assigned = []
+            var = Q.pop()
+            row, col = var
+            failure = False
+            variables_assigned_row, failure = self.remove_domain_row(grid, row, col)
+            variables_assigned_col, failure = self.remove_domain_column(grid, row, col)
+            variables_assigned_unit, failure = self.remove_domain_unit(grid, row, col)
+            if (failure):
+                return failure
+            variables_assigned = variables_assigned_col + variables_assigned_row + variables_assigned_unit
+            Q.update(variables_assigned)
+        return failure
 
 class Backtracking:
     """
